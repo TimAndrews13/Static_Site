@@ -42,3 +42,4 @@ def text_node_to_html_node(text_node: TextNode):
             return LeafNode("img", "", props={"src": text_node.url, "alt": text_node.text})
         case _:
             raise Exception("Not Valid TextType for text_node_to_html_node")
+
