@@ -13,7 +13,7 @@ def split_nodes_delimiter(old_nodes, delimiter, text_type):
         # Even index will be a TextNode, Odd index will be Text Type of Delimiter
         for i in range(len(sections)):
             #check if string value is empty
-            if len(sections[i]) == "":
+            if sections[i] == "":
                 continue
             #if index is an odd number, than new node is TextType of delimiter
             if i % 2 != 0:
