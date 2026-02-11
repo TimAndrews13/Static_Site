@@ -29,7 +29,7 @@ def block_to_block_type(markdown):
         return BlockType.QUOTE
 
     #Check for unorderd list:
-    unordered_bool = all(line.startswith("- ") for line in lines)
+    unordered_bool = all(line.startswith("- ") for line in lines) or all(line.startswith("* ") for line in lines)
     if unordered_bool:
         return BlockType.UNORDERED_LIST
 
