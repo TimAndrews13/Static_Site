@@ -1,16 +1,21 @@
 import os
 import shutil
 from pathlib import Path, PurePath
+import sys
 
 from markdown_to_html_node import markdown_to_html_node
 from extract_title import extract_title
 from parentnode import ParentNode
 
-def generate_page(from_path, template_path, dest_path):
+def generate_page(from_path, template_path, dest_path, basepath):
     original_cwd = os.getcwd()
     from_path = os.path.join(original_cwd, from_path)
     template_path = os.path.join(original_cwd, template_path)
     dest_path = os.path.join(original_cwd, dest_path)
+    if len(sys.argv) > 1:
+        basepath = sys.argv[1]
+    else:
+        basepath = "/"
 
     print(f"Generating page from {from_path} to {dest_path} using {template_path}")
     #Read Markdown File from from_path
@@ -30,9 +35,12 @@ def generate_page(from_path, template_path, dest_path):
     #Extract Title from Markdown
     title = extract_title(md)
 
-    #Replce {{ Title }} and {{ Content }} in template.html
+    #Replace {{ Title }} and {{ Content }} in template.html
     template = template.replace("{{ Title }}", title)
     template = template.replace("{{ Content }}", html)
+    #Replace href="/ and src="/ with href="{basepath} and src="{basepath}
+    tempalte = template.replace('href="/', f'href="{basepath}')
+    tempalte = template.replace('src="/', f'src="{basepath}')
 
     #Write New HTML file in the dest_path
     dest_dir_path = os.path.dirname(dest_path)
@@ -42,7 +50,7 @@ def generate_page(from_path, template_path, dest_path):
         file.write(template)
 
 
-def generate_pages_recursive(dir_path_content, template_path, dest_dir_path):
+def generate_pages_recursive(dir_path_content, template_path, dest_dir_path, basepath):
     #Set File Paths
     original_cwd = os.getcwd()
     target_path = os.path.join(original_cwd, dest_dir_path)
@@ -70,4 +78,4 @@ def generate_pages_recursive(dir_path_content, template_path, dest_dir_path):
 
 
         
-        generate_page(file, template_path, new_file)
+        generate_page(file, template_path, new_file, basepath)
