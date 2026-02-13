@@ -12,10 +12,6 @@ def generate_page(from_path, template_path, dest_path, basepath):
     from_path = os.path.join(original_cwd, from_path)
     template_path = os.path.join(original_cwd, template_path)
     dest_path = os.path.join(original_cwd, dest_path)
-    if len(sys.argv) > 1:
-        basepath = sys.argv[1]
-    else:
-        basepath = "/"
 
     print(f"Generating page from {from_path} to {dest_path} using {template_path}")
     #Read Markdown File from from_path
