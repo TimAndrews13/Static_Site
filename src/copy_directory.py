@@ -3,10 +3,12 @@ import shutil
 
 
 def copy_directory(source_dir, target_dir):
-    #Remove public File Directory
+    #Set File Paths
     original_cwd = os.getcwd()
     target_path = os.path.join(original_cwd, target_dir)
     source_path = os.path.join(original_cwd, source_dir)
+
+    #Remove public File Directory
     if os.path.exists(target_path):
         print(f"Removing File Directory: {target_path}")
         shutil.rmtree(target_path)
